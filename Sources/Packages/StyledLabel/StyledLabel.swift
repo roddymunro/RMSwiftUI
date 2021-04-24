@@ -15,7 +15,7 @@ public struct StyledLabel: View {
     private let weight: Font.Weight
     private let iconColor: Color
     
-    public init(_ text: String, icon: String, block: Bool, style: Font = .body, weight: Font.Weight = .regular, iconColor: Color = .accentColor) {
+    public init(_ text: String, icon: String, block: Bool = false, style: Font = .body, weight: Font.Weight = .regular, iconColor: Color = .accentColor) {
         self.text = text
         self.icon = icon
         self.block = block
