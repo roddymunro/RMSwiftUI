@@ -39,6 +39,7 @@ public struct EmptyMessage: View {
             if let button = button {
                 SwiftUI.Button(button.title, action: button.action)
                     .buttonStyle(MinorButtonStyle())
+                    .padding()
             }
             Spacer()
         }
