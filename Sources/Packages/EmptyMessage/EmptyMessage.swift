@@ -13,11 +13,13 @@ public struct EmptyMessage: View {
     private var imageName: String?
     private var title: String
     private var message: String
+    private var button: EmptyMessage.Button?
     
-    public init(imageName: String?=nil, title: String, message: String) {
+    public init(imageName: String?=nil, title: String, message: String, button: EmptyMessage.Button?=nil) {
         self.imageName = imageName
         self.title = title
         self.message = message
+        self.button = button
     }
     
     public var body: some View {
@@ -33,9 +35,17 @@ public struct EmptyMessage: View {
                 .font(Font.title.weight(.bold))
                 .frame(maxWidth: .infinity)
             Text(message)
+            if let button = button {
+                SwiftUI.Button(button.title, action: button.action)
+            }
             Spacer()
         }
         .multilineTextAlignment(.center)
         .padding(EdgeInsets(top: 8, leading: 48, bottom: 8, trailing: 48))
+    }
+    
+    public struct Button {
+        let title: String
+        let action: ()->()
     }
 }
