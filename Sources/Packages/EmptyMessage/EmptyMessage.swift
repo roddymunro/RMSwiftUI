@@ -45,7 +45,12 @@ public struct EmptyMessage: View {
     }
     
     public struct Button {
-        let title: String
-        let action: ()->()
+        public var title: String
+        public var action: ()->()
+        
+        public init(title: String, action: @escaping ()->()) {
+            self.title = title
+            self.action = action
+        }
     }
 }
