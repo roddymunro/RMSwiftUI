@@ -18,7 +18,7 @@ public struct MinorButtonStyle: ButtonStyle {
             .font(Font.callout.weight(.semibold))
             .padding(.vertical, 4)
             .padding(.horizontal, 24)
-            .background(Color.accentColor.opacity(0.1))
+            .background(Color.accentColor.opacity(configuration.isPressed ? 0.1 : 0.01))
             .frame(height: 24)
             .clipShape(RoundedRectangle(cornerRadius: 24))
     }
