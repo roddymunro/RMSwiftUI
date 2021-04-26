@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import RMSwiftUICore
 
 public struct EmptyMessage: View {
     
@@ -37,6 +38,7 @@ public struct EmptyMessage: View {
             Text(message)
             if let button = button {
                 SwiftUI.Button(button.title, action: button.action)
+                    .buttonStyle(MinorButtonStyle())
             }
             Spacer()
         }
