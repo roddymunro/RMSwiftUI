@@ -57,3 +57,14 @@ public struct EmptyMessage: View {
         }
     }
 }
+
+struct EmptyMessage_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        EmptyMessage(
+            title: "Test Message",
+            message: "This is testing my EmptyMessage view, hopefully it looks good.",
+            button: .init(title: "Refresh", action: {})
+        )
+    }
+}
