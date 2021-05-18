@@ -7,17 +7,20 @@
 //
 
 import SwiftUI
+import RMSwiftUICore
 
 public struct EmptyMessage: View {
     
     private var imageName: String?
     private var title: String
     private var message: String
+    private var button: EmptyMessage.Button?
     
-    public init(imageName: String?=nil, title: String, message: String) {
+    public init(imageName: String?=nil, title: String, message: String, button: EmptyMessage.Button?=nil) {
         self.imageName = imageName
         self.title = title
         self.message = message
+        self.button = button
     }
     
     public var body: some View {
@@ -33,9 +36,35 @@ public struct EmptyMessage: View {
                 .font(Font.title.weight(.bold))
                 .frame(maxWidth: .infinity)
             Text(message)
+            if let button = button {
+                SwiftUI.Button(button.title, action: button.action)
+                    .buttonStyle(MinorButtonStyle())
+                    .padding()
+            }
             Spacer()
         }
         .multilineTextAlignment(.center)
         .padding(EdgeInsets(top: 8, leading: 48, bottom: 8, trailing: 48))
+    }
+    
+    public struct Button {
+        public var title: String
+        public var action: ()->()
+        
+        public init(title: String, action: @escaping ()->()) {
+            self.title = title
+            self.action = action
+        }
+    }
+}
+
+struct EmptyMessage_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        EmptyMessage(
+            title: "Test Message",
+            message: "This is testing my EmptyMessage view, hopefully it looks good.",
+            button: .init(title: "Refresh", action: {})
+        )
     }
 }
