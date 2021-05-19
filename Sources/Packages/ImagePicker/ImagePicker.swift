@@ -11,9 +11,9 @@ public struct ImagePicker: UIViewControllerRepresentable {
     
     @Binding private var image: UIImage?
     var sourceType: UIImagePickerController.SourceType
-    private var onImageSelection: (() -> ())?
+    private var onImageSelection: ((UIImage) -> ())?
     
-    public init(image: Binding<UIImage?>, sourceType: UIImagePickerController.SourceType, onImageSelection: (() -> ())?=nil) {
+    public init(image: Binding<UIImage?>, sourceType: UIImagePickerController.SourceType, onImageSelection: ((UIImage) -> ())?=nil) {
         self._image = image
         self.sourceType = sourceType
         self.onImageSelection = onImageSelection
@@ -44,12 +44,12 @@ public struct ImagePicker: UIViewControllerRepresentable {
         public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
                 parent.image = uiImage
-            }
-            
-            if let onImageSelection = parent.onImageSelection {
-                onImageSelection()
-            } else {
-                parent.presentationMode.wrappedValue.dismiss()
+                
+                if let onImageSelection = parent.onImageSelection {
+                    onImageSelection(uiImage)
+                } else {
+                    parent.presentationMode.wrappedValue.dismiss()
+                }
             }
         }
     }
