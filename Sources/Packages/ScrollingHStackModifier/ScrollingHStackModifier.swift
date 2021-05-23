@@ -13,13 +13,11 @@ public struct ScrollingHStackModifier: ViewModifier {
     public var items: Int
     public var itemWidth: CGFloat
     public var itemSpacing: CGFloat
-    public var snapToLeft: Bool
     
-    public init(items: Int, itemWidth: CGFloat, itemSpacing: CGFloat, snapToLeft: Bool=false) {
+    public init(items: Int, itemWidth: CGFloat, itemSpacing: CGFloat) {
         self.items = items
         self.itemWidth = itemWidth
         self.itemSpacing = itemSpacing
-        self.snapToLeft = snapToLeft
         
         // Calculate Total Content Width
         let contentWidth: CGFloat = CGFloat(items) * itemWidth + CGFloat(items - 1) * itemSpacing
@@ -32,10 +30,7 @@ public struct ScrollingHStackModifier: ViewModifier {
         #endif
         
         // Set Initial Offset to first Item
-        var initialOffset = (contentWidth/2.0) - (screenWidth/2.0) + ((screenWidth - itemWidth) / 2.0)
-        if snapToLeft {
-            initialOffset -= (screenWidth / 4.0) + 32
-        }
+        let initialOffset = (contentWidth/2.0) - (screenWidth/2.0) + ((screenWidth - itemWidth) / 2.0)
         
         self._scrollOffset = State(initialValue: initialOffset)
         self._dragOffset = State(initialValue: 0)
@@ -64,10 +59,7 @@ public struct ScrollingHStackModifier: ViewModifier {
                     #endif
                     
                     // Center position of current offset
-                    var center = scrollOffset + (screenWidth / 2.0) + (contentWidth / 2.0)
-                    if snapToLeft {
-                        center += (screenWidth / 4.0)
-                    }
+                    let center = scrollOffset + (screenWidth / 2.0) + (contentWidth / 2.0)
                     
                     // Calculate which item we are closest to using the defined size
                     var index = (center - (screenWidth / 2.0)) / (itemWidth + itemSpacing)
@@ -84,10 +76,7 @@ public struct ScrollingHStackModifier: ViewModifier {
                     index = max(index, 0)
                     
                     // Set final offset (snapping to item)
-                    var newOffset = index * itemWidth + (index - 1) * itemSpacing - (contentWidth / 2.0) + (screenWidth / 2.0) - ((screenWidth - itemWidth) / 2.0) + itemSpacing
-                    if snapToLeft {
-                        newOffset -= (screenWidth / 4.0) + 32
-                    }
+                    let newOffset = index * itemWidth + (index - 1) * itemSpacing - (contentWidth / 2.0) + (screenWidth / 2.0) - ((screenWidth - itemWidth) / 2.0) + itemSpacing
                     
                     // Animate snapping
                     withAnimation {
