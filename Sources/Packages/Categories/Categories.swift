@@ -26,14 +26,8 @@ public struct Categories: View {
                         self.selection = category
                     }, label: {
                         category.display
-                            .foregroundColor(Color(.secondaryLabel))
-                            .multilineTextAlignment(.center)
-                            .font(Font.callout.weight(.medium))
-                            .padding(.vertical, 16)
-                            .padding(.horizontal, 12)
-                            .background(selection == category ? Color.accentColor.opacity(0.3) : Color(.secondarySystemBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: 24))
                     })
+                    .buttonStyle(OptionButtonStyle(isSelected: selection == category))
                 }
             }
         }
@@ -47,6 +41,36 @@ public struct Categories: View {
         public init(value: String, display: Text) {
             self.value = value
             self.display = display
+        }
+    }
+}
+
+public struct OptionButtonStyle: ButtonStyle {
+    
+    private var isSelected: Bool
+    
+    public init(isSelected: Bool) {
+        self.isSelected = isSelected
+    }
+    
+    public func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(Color(.secondaryLabel))
+            .multilineTextAlignment(.center)
+            .font(Font.callout.weight(.medium))
+            .padding(.vertical, 16)
+            .padding(.horizontal, 12)
+            .background(makeBackgroundColor(isPressed: configuration.isPressed))
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+    }
+    
+    private func makeBackgroundColor(isPressed: Bool) -> some View {
+        Group {
+            if isSelected {
+                Color.accentColor.opacity(isPressed ? 0.35 : 0.2)
+            } else {
+                Color(isPressed ? .lightGray : .secondarySystemBackground)
+            }
         }
     }
 }
