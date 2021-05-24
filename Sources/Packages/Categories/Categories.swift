@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Categories.swift
 //  
 //
 //  Created by Roddy Munro on 2021-05-23.
@@ -29,7 +29,7 @@ public struct Categories: View {
                     })
                     .buttonStyle(OptionButtonStyle(isSelected: selection == category))
                 }
-            }
+            }.padding(.horizontal, 16)
         }
     }
     
@@ -59,7 +59,7 @@ public struct OptionButtonStyle: ButtonStyle {
             .multilineTextAlignment(.center)
             .font(Font.callout.weight(.medium))
             .padding(.vertical, 16)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 16)
             .background(makeBackgroundColor(isPressed: configuration.isPressed))
             .clipShape(RoundedRectangle(cornerRadius: 24))
     }
