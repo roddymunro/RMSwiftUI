@@ -28,7 +28,7 @@ public struct RangeSlider: View {
                 Capsule()
                     .fill(backgroundTrackColor)
                     .frame(height: 4)
-                    .frame(width: geo.size.width)
+                    .frame(width: sliderWidth(geo))
                 
                 Capsule()
                     .fill(selectedTrackColor)
@@ -38,8 +38,8 @@ public struct RangeSlider: View {
                 RangeSliderThumb()
                     .offset(x: minXPoint)
                     .gesture(DragGesture().onChanged { value in
-                        if value.location.x > 0 && value.location.x <= geo.size.width && value.location.x <= maxXPoint {
-                            minPercent = Float(value.location.x / geo.size.width)
+                        if value.location.x > 0 && value.location.x <= sliderWidth(geo) && value.location.x <= maxXPoint {
+                            minPercent = Float(value.location.x / sliderWidth(geo))
                             minXPoint = value.location.x
                         }
                     })
@@ -47,16 +47,23 @@ public struct RangeSlider: View {
                 RangeSliderThumb()
                     .offset(x: maxXPoint)
                     .gesture(DragGesture().onChanged { value in
-                        if value.location.x + 20 <= geo.size.width && value.location.x >= minXPoint {
-                            maxPercent = Float((value.location.x + 20) / geo.size.width)
+                        if value.location.x <= sliderWidth(geo) && value.location.x >= minXPoint {
+                            maxPercent = Float(value.location.x / sliderWidth(geo))
                             maxXPoint = value.location.x
                         }
                     })
-            }.onAppear {
-                self.minXPoint = geo.size.width * CGFloat(minPercent)
-                self.maxXPoint = geo.size.width * CGFloat(maxPercent)
+            }
+            .frame(width: sliderWidth(geo))
+            .frame(maxWidth: .infinity, alignment: .center)
+            .onAppear {
+                self.minXPoint = sliderWidth(geo) * CGFloat(minPercent)
+                self.maxXPoint = sliderWidth(geo) * CGFloat(maxPercent)
             }
         }
+    }
+    
+    private func sliderWidth(_ geo: GeometryProxy) -> CGFloat {
+        geo.size.width * 0.9
     }
 }
 
@@ -75,7 +82,20 @@ private struct RangeSliderThumb: View {
 }
 
 struct RangeSlider_Previews: PreviewProvider {
+    
     static var previews: some View {
-        RangeSlider(minPercent: .constant(0.25), maxPercent: .constant(0.75))
+        RangeSliderPreviewWrapper()
+    }
+}
+
+private struct RangeSliderPreviewWrapper: View {
+    @State var minPercent: Float = 0.25
+    @State var maxPercent: Float = 0.75
+    
+    var body: some View {
+        VStack {
+            Text("\(minPercent)-\(maxPercent)")
+            RangeSlider(minPercent: $minPercent, maxPercent: $maxPercent)
+        }
     }
 }
