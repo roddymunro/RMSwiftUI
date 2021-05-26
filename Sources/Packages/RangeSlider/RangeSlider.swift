@@ -39,7 +39,7 @@ public struct RangeSlider: View {
                     .offset(x: minXPoint)
                     .gesture(DragGesture().onChanged { value in
                         if value.location.x > 0 && value.location.x <= geo.size.width && value.location.x <= maxXPoint {
-                            minPercent = Float((value.location.x / geo.size.width) * 100)
+                            minPercent = Float(value.location.x / geo.size.width)
                             minXPoint = value.location.x
                         }
                     })
@@ -48,7 +48,7 @@ public struct RangeSlider: View {
                     .offset(x: maxXPoint)
                     .gesture(DragGesture().onChanged { value in
                         if value.location.x + 20 <= geo.size.width && value.location.x >= minXPoint {
-                            maxPercent = Float(((value.location.x + 20) / geo.size.width) * 100)
+                            maxPercent = Float((value.location.x + 20) / geo.size.width)
                             maxXPoint = value.location.x
                         }
                     })
