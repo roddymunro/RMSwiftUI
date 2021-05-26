@@ -14,7 +14,7 @@ public struct RangeSlider: View {
     @State private var minXPoint: CGFloat = 0
     @State private var maxXPoint: CGFloat = 0
     
-    private let backgroundTrackColor: Color = Color(.systemGray5)
+    private let backgroundTrackColor: Color = Color(.secondarySystemFill)
     private let selectedTrackColor: Color = Color.accentColor
     
     public init(minPercent: Binding<Float>, maxPercent: Binding<Float>) {
@@ -85,6 +85,7 @@ struct RangeSlider_Previews: PreviewProvider {
     
     static var previews: some View {
         RangeSliderPreviewWrapper()
+            .preferredColorScheme(.dark)
     }
 }
 
@@ -93,9 +94,10 @@ private struct RangeSliderPreviewWrapper: View {
     @State var maxPercent: Float = 0.75
     
     var body: some View {
-        VStack {
+        Form {
             Text("\(minPercent)-\(maxPercent)")
             RangeSlider(minPercent: $minPercent, maxPercent: $maxPercent)
+            Slider(value: $minPercent, in: 0...1)
         }
     }
 }
