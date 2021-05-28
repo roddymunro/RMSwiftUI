@@ -20,7 +20,7 @@ public struct FormField: View {
             Text(label)
                 .fontWeight(.medium)
             Spacer()
-            TextField(label, text: $binding)
+            TextField(placeholder ?? label, text: $binding)
                 .multilineTextAlignment(.trailing)
         }
         .accessibility(identifier: "\(label.filter { !$0.isWhitespace })Label")
