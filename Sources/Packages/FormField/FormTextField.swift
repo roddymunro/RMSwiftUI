@@ -13,6 +13,7 @@ public struct FormField: View {
     public init(label: String, binding: Binding<String>, placeholder: String?=nil) {
         self.label = label
         self._binding = binding
+        self.placeholder = placeholder
     }
     
     public var body: some View {
