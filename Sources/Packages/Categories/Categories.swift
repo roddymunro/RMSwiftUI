@@ -69,7 +69,7 @@ public struct OptionButtonStyle: ButtonStyle {
             if isSelected {
                 Color.accentColor.opacity(isPressed ? 0.35 : 0.2)
             } else {
-                Color(isPressed ? .lightGray : .secondarySystemBackground)
+                isPressed ? Color(.lightGray) : .cell
             }
         }
     }
