@@ -13,6 +13,7 @@ public struct FormField: View {
     public init(label: String, binding: Binding<String>, placeholder: String?=nil) {
         self.label = label
         self._binding = binding
+        self.placeholder = placeholder
     }
     
     public var body: some View {
@@ -20,7 +21,7 @@ public struct FormField: View {
             Text(label)
                 .fontWeight(.medium)
             Spacer()
-            TextField(label, text: $binding)
+            TextField(placeholder ?? label, text: $binding)
                 .multilineTextAlignment(.trailing)
         }
         .accessibility(identifier: "\(label.filter { !$0.isWhitespace })Label")
