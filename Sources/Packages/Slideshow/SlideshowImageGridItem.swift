@@ -12,12 +12,12 @@ struct SlideshowImageGridItem: View {
     
     let index: Int
     let imageHeight: CGFloat
-    let numberOfImagesToShow: Int
+    let maximumImagesToShow: Int?
     let cornerRadius: CGFloat
     
     var body: some View {
         ZStack {
-            if index < numberOfImagesToShow {
+            if index < maximumImagesToShow ?? Int.max {
                 viewModel.images[index]
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -25,11 +25,11 @@ struct SlideshowImageGridItem: View {
                     .cornerRadius(cornerRadius)
             }
             
-            if viewModel.images.count > numberOfImagesToShow && index == numberOfImagesToShow - 1 {
+            if let maximumImagesToShow = maximumImagesToShow, viewModel.images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(Color.black.opacity(0.4))
                 
-                Text("+\(viewModel.images.count - numberOfImagesToShow)")
+                Text("+\(viewModel.images.count - maximumImagesToShow)")
                     .font(.title)
                     .fontWeight(.heavy)
                     .foregroundColor(.white)
