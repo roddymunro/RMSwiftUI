@@ -9,7 +9,7 @@ import RMSwiftUICore
 
 struct SlideshowImageGridItem: View {
     
-    @ObservedObject var viewModel: SlideshowImageGridView.ViewModel
+    @Binding var images: [UIImage?]
     
     let index: Int
     let imageHeight: CGFloat
@@ -18,20 +18,20 @@ struct SlideshowImageGridItem: View {
     
     var body: some View {
         ZStack {
-            if let image = viewModel.images[index] {
+            if let image = images[index] {
                 if index < maximumImagesToShow ?? Int.max {
-                    image
+                    Image(uiImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(height: imageHeight)
                         .cornerRadius(cornerRadius)
                 }
                 
-                if let maximumImagesToShow = maximumImagesToShow, viewModel.images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
+                if let maximumImagesToShow = maximumImagesToShow, images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
                     RoundedRectangle(cornerRadius: cornerRadius)
                         .fill(Color.black.opacity(0.4))
                     
-                    Text("+\(viewModel.images.count - maximumImagesToShow)")
+                    Text("+\(images.count - maximumImagesToShow)")
                         .font(.title)
                         .fontWeight(.heavy)
                         .foregroundColor(.white)

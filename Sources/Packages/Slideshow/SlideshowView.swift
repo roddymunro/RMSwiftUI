@@ -9,17 +9,19 @@ import RMCloseButton
 
 struct SlideshowView: View {
     
-    @ObservedObject var viewModel: SlideshowImageGridView.ViewModel
+    @Binding var images: [UIImage?]
+    @Binding var selectedImageIndex: Int?
+    @Binding var slideshowOpened: Bool
     
     var body: some View {
         ZStack {
             Color.background.ignoresSafeArea()
             
             ScrollView(.init()) {
-                TabView(selection: $viewModel.selectedImageIndex) {
-                    ForEach(viewModel.images.indices, id: \.self) { index in
-                        if let image = viewModel.images[index] {
-                            image
+                TabView(selection: $selectedImageIndex) {
+                    ForEach(images.indices, id: \.self) { index in
+                        if let image = images[index] {
+                            Image(uiImage: image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .tag(index as Int?)
@@ -33,7 +35,7 @@ struct SlideshowView: View {
                 .overlay(
                     CloseButton(action: {
                         withAnimation(.default) {
-                            viewModel.closeSlideshow()
+                            closeSlideshow()
                         }
                     })
                     .padding(12),
@@ -43,5 +45,10 @@ struct SlideshowView: View {
             }.ignoresSafeArea()
         }
         .transition(.move(edge: .bottom))
+    }
+    
+    private func closeSlideshow() {
+        self.slideshowOpened = false
+        self.selectedImageIndex = nil
     }
 }
