@@ -8,7 +8,7 @@ import SwiftUI
 
 struct SlideshowImageGridItem: View {
     
-    @EnvironmentObject var viewModel: SlideshowImageGridView.ViewModel
+    @ObservedObject var viewModel: SlideshowImageGridView.ViewModel
     
     let index: Int
     let imageHeight: CGFloat

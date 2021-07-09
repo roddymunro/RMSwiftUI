@@ -32,7 +32,7 @@ public struct SlideshowImageGridView: View {
                             viewModel.openImage(at: index)
                         }
                     }) {
-                        SlideshowImageGridItem(index: index, imageHeight: imageSize.height, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius)
+                        SlideshowImageGridItem(viewModel: viewModel, index: index, imageHeight: imageSize.height, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius)
                     }
                 }
             }
@@ -40,9 +40,8 @@ public struct SlideshowImageGridView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .sheet(isPresented: $viewModel.slideshowOpened, onDismiss: viewModel.closeSlideshow) {
-            SlideshowView()
+            SlideshowView(viewModel: viewModel)
         }
-        .environmentObject(viewModel)
     }
 }
 

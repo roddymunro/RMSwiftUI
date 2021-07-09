@@ -9,7 +9,7 @@ import RMCloseButton
 
 struct SlideshowView: View {
     
-    @EnvironmentObject var viewModel: SlideshowImageGridView.ViewModel
+    @ObservedObject var viewModel: SlideshowImageGridView.ViewModel
     
     var body: some View {
         ZStack {
@@ -36,8 +36,7 @@ struct SlideshowView: View {
                             viewModel.closeSlideshow()
                         }
                     })
-                    .padding(10)
-                    .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top),
+                    .padding(12),
                     
                     alignment: .topTrailing
                 )
