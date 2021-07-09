@@ -29,7 +29,7 @@ public struct SlideshowImageGridView: View {
                 ForEach(viewModel.images.indices, id: \.self) { index in
                     Button(action: {
                         withAnimation(.easeInOut) {
-                            viewModel.selectedImageIndex = index
+                            viewModel.openImage(at: index)
                         }
                     }) {
                         SlideshowImageGridItem(index: index, imageHeight: imageSize.height, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius)
@@ -39,13 +39,9 @@ public struct SlideshowImageGridView: View {
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .overlay(
-            ZStack {
-                if viewModel.selectedImageIndex != nil {
-                    SlideshowView()
-                }
-            }
-        )
+        .sheet(isPresented: $viewModel.slideshowOpened, onDismiss: viewModel.closeSlideshow) {
+            SlideshowView()
+        }
         .environmentObject(viewModel)
     }
 }
@@ -54,12 +50,23 @@ extension SlideshowImageGridView {
     class ViewModel: ObservableObject {
         @Published var images: [Image?] = []
         @Published public var selectedImageIndex: Int?
+        @Published public var slideshowOpened: Bool = false
         @Published var imageViewerOffset: CGSize = .zero
         @Published var bgOpacity: Double = 1
         @Published var imageScale: CGFloat = 1
         
         init(images: [Image?]) {
             self.images = images
+        }
+        
+        public func openImage(at idx: Int) {
+            self.selectedImageIndex = idx
+            self.slideshowOpened = true
+        }
+        
+        public func closeSlideshow() {
+            self.slideshowOpened = false
+            self.selectedImageIndex = nil
         }
         
         public func onChange(value: CGSize) {
@@ -82,7 +89,7 @@ extension SlideshowImageGridView {
                 }
                 
                 if translation >= 250 {
-                    selectedImageIndex = nil
+                    closeSlideshow()
                 }
                 
                 imageViewerOffset = .zero

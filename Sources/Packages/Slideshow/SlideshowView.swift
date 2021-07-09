@@ -52,7 +52,7 @@ struct SlideshowView: View {
                 .overlay(
                     CloseButton(action: {
                         withAnimation(.default) {
-                            viewModel.selectedImageIndex = nil
+                            viewModel.closeSlideshow()
                         }
                     })
                     .padding(10)
