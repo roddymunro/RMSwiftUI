@@ -17,22 +17,30 @@ struct SlideshowImageGridItem: View {
     
     var body: some View {
         ZStack {
-            if index < maximumImagesToShow ?? Int.max {
-                viewModel.images[index]
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: imageHeight)
-                    .cornerRadius(cornerRadius)
-            }
-            
-            if let maximumImagesToShow = maximumImagesToShow, viewModel.images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
+            if let image = viewModel.images[index] {
+                if index < maximumImagesToShow ?? Int.max {
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: imageHeight)
+                        .cornerRadius(cornerRadius)
+                }
+                
+                if let maximumImagesToShow = maximumImagesToShow, viewModel.images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(Color.black.opacity(0.4))
+                    
+                    Text("+\(viewModel.images.count - maximumImagesToShow)")
+                        .font(.title)
+                        .fontWeight(.heavy)
+                        .foregroundColor(.white)
+                }
+            } else {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(Color.black.opacity(0.4))
                 
-                Text("+\(viewModel.images.count - maximumImagesToShow)")
-                    .font(.title)
-                    .fontWeight(.heavy)
-                    .foregroundColor(.white)
+                ProgressView()
+                    .scaleEffect(1.4)
             }
         }
     }

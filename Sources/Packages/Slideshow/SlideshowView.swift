@@ -21,26 +21,31 @@ struct SlideshowView: View {
             ScrollView(.init()) {
                 TabView(selection: $viewModel.selectedImageIndex) {
                     ForEach(viewModel.images.indices, id: \.self) { index in
-                        viewModel.images[index]
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .tag(index as Int?)
-                            .scaleEffect(viewModel.selectedImageIndex == index ? (viewModel.imageScale > 1 ? viewModel.imageScale : 1) : 1)
-                            .offset(y: viewModel.imageViewerOffset.height)
-                            .gesture(
-                                MagnificationGesture().onChanged { value in
-                                    viewModel.imageScale = value
-                                }.onEnded { _ in
-                                    withAnimation(.spring()) {
-                                        viewModel.imageScale = 1
+                        if let image = viewModel.images[index] {
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .tag(index as Int?)
+                                .scaleEffect(viewModel.selectedImageIndex == index ? (viewModel.imageScale > 1 ? viewModel.imageScale : 1) : 1)
+                                .offset(y: viewModel.imageViewerOffset.height)
+                                .gesture(
+                                    MagnificationGesture().onChanged { value in
+                                        viewModel.imageScale = value
+                                    }.onEnded { _ in
+                                        withAnimation(.spring()) {
+                                            viewModel.imageScale = 1
+                                        }
                                     }
-                                }
-                                .simultaneously(with: TapGesture(count: 2).onEnded {
-                                    withAnimation {
-                                        viewModel.imageScale = viewModel.imageScale > 1 ? 1 : 4
-                                    }
-                                })
-                            )
+                                    .simultaneously(with: TapGesture(count: 2).onEnded {
+                                        withAnimation {
+                                            viewModel.imageScale = viewModel.imageScale > 1 ? 1 : 4
+                                        }
+                                    })
+                                )
+                        } else {
+                            ProgressView()
+                                .scaleEffect(1.4)
+                        }
                     }
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))

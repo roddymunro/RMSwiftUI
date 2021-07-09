@@ -15,7 +15,7 @@ public struct SlideshowImageGridView: View {
     private let maximumImagesToShow: Int?
     private let cornerRadius: CGFloat
     
-    public init(images: [Image], imageSize: CGSize, maximumImagesToShow: Int?=nil, cornerRadius: CGFloat = 12) {
+    public init(images: [Image?], imageSize: CGSize, maximumImagesToShow: Int?=nil, cornerRadius: CGFloat = 12) {
         self._viewModel = StateObject(wrappedValue: .init(images: images))
         self.imageSize = imageSize
         self.maximumImagesToShow = maximumImagesToShow
@@ -52,13 +52,13 @@ public struct SlideshowImageGridView: View {
 
 extension SlideshowImageGridView {
     class ViewModel: ObservableObject {
-        @Published private(set) var images: [Image] = []
+        @Published var images: [Image?] = []
         @Published public var selectedImageIndex: Int?
         @Published var imageViewerOffset: CGSize = .zero
         @Published var bgOpacity: Double = 1
         @Published var imageScale: CGFloat = 1
         
-        init(images: [Image]) {
+        init(images: [Image?]) {
             self.images = images
         }
         
@@ -94,13 +94,12 @@ extension SlideshowImageGridView {
 
 struct Slideshow_Previews: PreviewProvider {
     
+    static let images = [
+        "image1", "image2", "image3", "image4", "image5", "image6"
+    ].map { Image($0, bundle: .module) }
+    
     static var previews: some View {
-        SlideshowImageGridView(images: [
-            "image1", "image2", "image3", "image4", "image5", "image6"
-        ].map { Image($0, bundle: .module) }, imageSize: .init(width: 140, height: 120), maximumImagesToShow: 4)
-        
-        SlideshowImageGridView(images: [
-            "image1", "image2", "image3", "image4", "image5", "image6"
-        ].map { Image($0, bundle: .module) }, imageSize: .init(width: 140, height: 120))
+        SlideshowImageGridView(images: images, imageSize: .init(width: 140, height: 120), maximumImagesToShow: 4)
+        SlideshowImageGridView(images: images, imageSize: .init(width: 140, height: 120))
     }
 }
