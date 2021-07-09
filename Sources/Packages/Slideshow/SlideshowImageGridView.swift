@@ -51,9 +51,6 @@ extension SlideshowImageGridView {
         @Published var images: [Image?] = []
         @Published public var selectedImageIndex: Int?
         @Published public var slideshowOpened: Bool = false
-        @Published var imageViewerOffset: CGSize = .zero
-        @Published var bgOpacity: Double = 1
-        @Published var imageScale: CGFloat = 1
         
         init(images: [Image?]) {
             self.images = images
@@ -67,34 +64,6 @@ extension SlideshowImageGridView {
         public func closeSlideshow() {
             self.slideshowOpened = false
             self.selectedImageIndex = nil
-        }
-        
-        public func onChange(value: CGSize) {
-            imageViewerOffset = value
-            
-            let halfHeight = UIScreen.main.bounds.height / 2
-            let progress = imageViewerOffset.height / halfHeight
-            
-            withAnimation(.default) {
-                bgOpacity = Double(1 - (progress < 0 ? -progress : progress))
-            }
-        }
-        
-        public func onEnd(value: DragGesture.Value) {
-            withAnimation(.easeInOut) {
-                var translation = value.translation.height
-                
-                if translation < 0 {
-                    translation = -translation
-                }
-                
-                if translation >= 250 {
-                    closeSlideshow()
-                }
-                
-                imageViewerOffset = .zero
-                bgOpacity = 1
-            }
         }
     }
 }
