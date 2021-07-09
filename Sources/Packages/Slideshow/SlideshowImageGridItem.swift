@@ -5,6 +5,7 @@
 //
 
 import SwiftUI
+import RMSwiftUICore
 
 struct SlideshowImageGridItem: View {
     
@@ -37,7 +38,8 @@ struct SlideshowImageGridItem: View {
                 }
             } else {
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(Color.black.opacity(0.4))
+                    .fill(Color.primary.opacity(0.05))
+                    .frame(height: imageHeight)
                 
                 ProgressView()
                     .scaleEffect(1.4)
