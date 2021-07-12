@@ -41,7 +41,7 @@ public struct SlideshowImageGridView: View {
                 }
                 if let onAddButtonTapped = onAddButtonTapped {
                     Button(action: onAddButtonTapped) {
-                        
+                        addButtonLabel
                     }
                 }
             }
