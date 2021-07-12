@@ -60,8 +60,8 @@ public struct SlideshowImageGridView: View {
                 .frame(height: imageSize.height)
             
             Image(systemName: "plus")
-                .imageScale(.large)
                 .foregroundColor(Color.primary.opacity(0.6))
+                .font(.title.weight(.semibold))
         }
     }
     
