@@ -38,7 +38,7 @@ struct SlideshowImageGridItem: View {
                         .foregroundColor(.white)
                 } else if let onDeleteButtonTapped = onDeleteButtonTapped {
                     Button(action: { onDeleteButtonTapped(index) }) {
-                        Image(systemName: "xmark")
+                        Image(systemName: "trash")
                             .font(.system(size: 16, weight: .bold))
                             .foregroundColor(.white)
                             .padding(8)
@@ -46,7 +46,7 @@ struct SlideshowImageGridItem: View {
                             .clipShape(Circle())
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                     }
-                    .padding(8)
+                    .padding(6)
                 }
             } else {
                 RoundedRectangle(cornerRadius: cornerRadius)
