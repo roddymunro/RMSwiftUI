@@ -37,16 +37,21 @@ struct SlideshowImageGridItem: View {
                         .fontWeight(.heavy)
                         .foregroundColor(.white)
                 } else if let onDeleteButtonTapped = onDeleteButtonTapped {
-                    Button(action: { onDeleteButtonTapped(index) }) {
-                        Image(systemName: "trash")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.black)
-                            .clipShape(Circle())
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                    HStack {
+                        Spacer()
+                        VStack {
+                            Button(action: { onDeleteButtonTapped(index) }) {
+                                Image(systemName: "trash")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(8)
+                                    .background(Color.black)
+                                    .clipShape(Circle())
+                            }
+                            .padding(6)
+                            Spacer()
+                        }
                     }
-                    .padding(6)
                 }
             } else {
                 RoundedRectangle(cornerRadius: cornerRadius)
