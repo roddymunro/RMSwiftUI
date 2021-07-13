@@ -18,7 +18,7 @@ struct SlideshowImageGridItem: View {
     
     var body: some View {
         ZStack {
-            if let image = images[index] {
+            if index < images.count, let image = images[index] {
                 if index < maximumImagesToShow ?? Int.max {
                     Image(uiImage: image)
                         .resizable()
