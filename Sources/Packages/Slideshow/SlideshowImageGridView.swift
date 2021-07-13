@@ -17,13 +17,22 @@ public struct SlideshowImageGridView: View {
     private let maximumImagesToShow: Int?
     private let cornerRadius: CGFloat
     private let onAddButtonTapped: (() -> ())?
+    private let onDeleteButtonTapped: ((Int) -> ())?
     
-    public init(images: Binding<[UIImage?]>, imageSize: CGSize, maximumImagesToShow: Int?=nil, cornerRadius: CGFloat = 12, onAddButtonTapped: (() -> ())?=nil) {
+    public init(
+        images: Binding<[UIImage?]>,
+        imageSize: CGSize,
+        maximumImagesToShow: Int?=nil,
+        cornerRadius: CGFloat = 12,
+        onAddButtonTapped: (() -> ())?=nil,
+        onDeleteButtonTapped: ((Int) -> ())?=nil
+    ) {
         self._images = images
         self.imageSize = imageSize
         self.maximumImagesToShow = maximumImagesToShow
         self.cornerRadius = cornerRadius
         self.onAddButtonTapped = onAddButtonTapped
+        self.onDeleteButtonTapped = onDeleteButtonTapped
         UIScrollView.appearance().bounces = false
     }
     
@@ -36,7 +45,7 @@ public struct SlideshowImageGridView: View {
                             openImage(at: index)
                         }
                     }) {
-                        SlideshowImageGridItem(images: $images, index: index, imageHeight: imageSize.height, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius)
+                        SlideshowImageGridItem(images: $images, index: index, imageHeight: imageSize.height, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius, onDeleteButtonTapped: onDeleteButtonTapped)
                     }
                 }
                 if let onAddButtonTapped = onAddButtonTapped {

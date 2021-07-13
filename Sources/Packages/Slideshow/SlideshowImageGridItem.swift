@@ -15,6 +15,7 @@ struct SlideshowImageGridItem: View {
     let imageHeight: CGFloat
     let maximumImagesToShow: Int?
     let cornerRadius: CGFloat
+    let onDeleteButtonTapped: ((Int) -> ())?
     
     var body: some View {
         ZStack {
@@ -35,6 +36,12 @@ struct SlideshowImageGridItem: View {
                         .font(.title)
                         .fontWeight(.heavy)
                         .foregroundColor(.white)
+                } else if let onDeleteButtonTapped = onDeleteButtonTapped {
+                    Button(action: { onDeleteButtonTapped(index) }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .imageScale(.large)
+                            .foregroundColor(.accentColor)
+                    }
                 }
             } else {
                 RoundedRectangle(cornerRadius: cornerRadius)
