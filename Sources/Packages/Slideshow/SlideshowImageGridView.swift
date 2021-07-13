@@ -51,8 +51,8 @@ public struct SlideshowImageGridView: View {
                                 }
                             }) {
                                 SlideshowImageGridItem(images: $images, index: index, imageHeight: imageHeight, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius)
+                                    .clipped()
                             }
-                            .clipped()
                             
                             if let maximumImagesToShow = maximumImagesToShow, images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
                                 // show no button
