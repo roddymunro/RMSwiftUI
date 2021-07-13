@@ -38,10 +38,14 @@ struct SlideshowImageGridItem: View {
                         .foregroundColor(.white)
                 } else if let onDeleteButtonTapped = onDeleteButtonTapped {
                     Button(action: { onDeleteButtonTapped(index) }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .imageScale(.large)
-                            .foregroundColor(.accentColor)
+                        Image(systemName: "xmark")
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundColor(.white)
+                            .background(Color.accentColor.opacity(0.6))
+                            .clipShape(Circle())
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                     }
+                    .padding(8)
                 }
             } else {
                 RoundedRectangle(cornerRadius: cornerRadius)
