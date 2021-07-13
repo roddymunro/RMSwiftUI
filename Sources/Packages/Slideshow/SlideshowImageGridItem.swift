@@ -17,7 +17,7 @@ struct SlideshowImageGridItem: View {
     let cornerRadius: CGFloat
     
     var body: some View {
-        ZStack {
+//        ZStack {
             if index < images.count, let image = images[index] {
                 if index < maximumImagesToShow ?? Int.max {
                     Image(uiImage: image)
@@ -27,23 +27,24 @@ struct SlideshowImageGridItem: View {
                         .cornerRadius(cornerRadius)
                 }
                 
-                if let maximumImagesToShow = maximumImagesToShow, images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .fill(Color.black.opacity(0.4))
-                    
-                    Text("+\(images.count - maximumImagesToShow)")
-                        .font(.title)
-                        .fontWeight(.heavy)
-                        .foregroundColor(.white)
-                }
-            } else {
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(Color.primary.opacity(0.05))
-                    .frame(height: imageHeight)
-                
-                ProgressView()
-                    .scaleEffect(1.4)
-            }
-        }
+//                if let maximumImagesToShow = maximumImagesToShow, images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
+//                    RoundedRectangle(cornerRadius: cornerRadius)
+//                        .fill(Color.black.opacity(0.4))
+//
+//                    Text("+\(images.count - maximumImagesToShow)")
+//                        .font(.title)
+//                        .fontWeight(.heavy)
+//                        .foregroundColor(.white)
+//                }
+//            } else {
+//                RoundedRectangle(cornerRadius: cornerRadius)
+//                    .fill(Color.primary.opacity(0.05))
+//                    .frame(height: imageHeight)
+//                
+//                ProgressView()
+//                    .scaleEffect(1.4)
+//            }
+//        }
+//        .clipped()
     }
 }
