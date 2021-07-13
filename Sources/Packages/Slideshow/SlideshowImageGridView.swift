@@ -42,8 +42,8 @@ public struct SlideshowImageGridView: View {
     public var body: some View {
         ScrollView {
             LazyVGrid(columns: Array(repeating: .init(.flexible()), count: imagesPerRow), alignment: .leading, spacing: 8) {
-                ForEach(images.indices, id: \.self) { index in
-                    GeometryReader { geo in
+                GeometryReader { geo in
+                    ForEach(images.indices, id: \.self) { index in
                         if index < images.count {
                             ZStack(alignment: .topTrailing) {
                                 Button(action: {
