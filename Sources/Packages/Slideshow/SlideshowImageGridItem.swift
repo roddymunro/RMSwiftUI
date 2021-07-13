@@ -40,10 +40,10 @@ struct SlideshowImageGridItem: View {
 //                RoundedRectangle(cornerRadius: cornerRadius)
 //                    .fill(Color.primary.opacity(0.05))
 //                    .frame(height: imageHeight)
-//                
+//
 //                ProgressView()
 //                    .scaleEffect(1.4)
-//            }
+            }
 //        }
 //        .clipped()
     }
