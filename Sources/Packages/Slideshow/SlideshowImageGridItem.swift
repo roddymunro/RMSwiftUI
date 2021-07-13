@@ -39,9 +39,10 @@ struct SlideshowImageGridItem: View {
                 } else if let onDeleteButtonTapped = onDeleteButtonTapped {
                     Button(action: { onDeleteButtonTapped(index) }) {
                         Image(systemName: "xmark")
-                            .font(.system(size: 14, weight: .bold))
+                            .font(.system(size: 16, weight: .bold))
                             .foregroundColor(.white)
-                            .background(Color.accentColor.opacity(0.6))
+                            .padding(8)
+                            .background(Color.background)
                             .clipShape(Circle())
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                     }
