@@ -25,6 +25,7 @@ struct SlideshowImageGridItem: View {
                         .aspectRatio(contentMode: .fill)
                         .frame(height: imageHeight)
                         .cornerRadius(cornerRadius)
+                        .clipped()
                 }
                 
                 if let maximumImagesToShow = maximumImagesToShow, images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
