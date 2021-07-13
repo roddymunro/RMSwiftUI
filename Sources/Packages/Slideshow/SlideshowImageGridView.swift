@@ -13,7 +13,8 @@ public struct SlideshowImageGridView: View {
     @State private var selectedImageIndex: Int?
     @State private var slideshowOpened: Bool = false
     
-    private let imageSize: CGSize
+    private let imageHeight: CGFloat
+    private let imagesPerRow: Int
     private let maximumImagesToShow: Int?
     private let cornerRadius: CGFloat
     private let onAddButtonTapped: (() -> ())?
@@ -21,14 +22,16 @@ public struct SlideshowImageGridView: View {
     
     public init(
         images: Binding<[UIImage?]>,
-        imageSize: CGSize,
+        imageHeight: CGFloat,
+        imagesPerRow: Int,
         maximumImagesToShow: Int?=nil,
         cornerRadius: CGFloat = 12,
         onAddButtonTapped: (() -> ())?=nil,
         onDeleteButtonTapped: ((Int) -> ())?=nil
     ) {
         self._images = images
-        self.imageSize = imageSize
+        self.imageHeight = imageHeight
+        self.imagesPerRow = imagesPerRow
         self.maximumImagesToShow = maximumImagesToShow
         self.cornerRadius = cornerRadius
         self.onAddButtonTapped = onAddButtonTapped
@@ -38,7 +41,7 @@ public struct SlideshowImageGridView: View {
     
     public var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize.width), spacing: 16)], alignment: .leading, spacing: 8) {
+            LazyVGrid(columns: Array(repeating: .init(.flexible(), spacing: 16), count: imagesPerRow), alignment: .leading, spacing: 8) {
                 ForEach(images.indices, id: \.self) { index in
                     if index < images.count {
                         ZStack(alignment: .topTrailing) {
@@ -47,7 +50,7 @@ public struct SlideshowImageGridView: View {
                                     openImage(at: index)
                                 }
                             }) {
-                                SlideshowImageGridItem(images: $images, index: index, imageHeight: imageSize.height, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius)
+                                SlideshowImageGridItem(images: $images, index: index, imageHeight: imageHeight, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius)
                             }
                             
                             if let maximumImagesToShow = maximumImagesToShow, images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
@@ -84,7 +87,7 @@ public struct SlideshowImageGridView: View {
         ZStack {
             RoundedRectangle(cornerRadius: cornerRadius)
                 .fill(Color.primary.opacity(0.05))
-                .frame(height: imageSize.height)
+                .frame(height: imageHeight)
             
             Image(systemName: "plus")
                 .foregroundColor(Color.primary.opacity(0.6))
