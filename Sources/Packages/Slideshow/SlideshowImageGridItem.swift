@@ -42,7 +42,7 @@ struct SlideshowImageGridItem: View {
                             .font(.system(size: 16, weight: .bold))
                             .foregroundColor(.white)
                             .padding(8)
-                            .background(Color.background)
+                            .background(Color.black)
                             .clipShape(Circle())
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                     }
