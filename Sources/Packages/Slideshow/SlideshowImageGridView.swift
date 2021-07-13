@@ -42,10 +42,10 @@ public struct SlideshowImageGridView: View {
     public var body: some View {
         ScrollView {
             LazyVGrid(columns: Array(repeating: .init(.flexible()), count: imagesPerRow), alignment: .leading, spacing: 8) {
-                GeometryReader { geo in
-                    ForEach(images.indices, id: \.self) { index in
-                        if index < images.count {
-                            ZStack(alignment: .topTrailing) {
+                ForEach(images.indices, id: \.self) { index in
+                    if index < images.count {
+                        ZStack(alignment: .topTrailing) {
+                            GeometryReader { geo in
                                 Button(action: {
                                     withAnimation(.easeInOut) {
                                         openImage(at: index)
