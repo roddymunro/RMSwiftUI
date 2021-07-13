@@ -12,7 +12,7 @@ struct SlideshowImageGridItem: View {
     @Binding var images: [UIImage?]
     
     let index: Int
-    let imageSize: CGSize
+    let cellHeight: CGFloat
     let maximumImagesToShow: Int?
     let cornerRadius: CGFloat
     
@@ -22,8 +22,7 @@ struct SlideshowImageGridItem: View {
                 if index < maximumImagesToShow ?? Int.max {
                     Image(uiImage: image)
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: imageSize.width, height: imageSize.height)
+                        .aspectRatio(contentMode: .fit)
                         .cornerRadius(cornerRadius)
                 }
                 
@@ -39,7 +38,7 @@ struct SlideshowImageGridItem: View {
             } else {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(Color.primary.opacity(0.05))
-                    .frame(height: imageSize.height)
+                    .frame(height: cellHeight)
 
                 ProgressView()
                     .scaleEffect(1.4)
