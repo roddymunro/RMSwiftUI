@@ -24,6 +24,7 @@ struct SlideshowImageGridItem: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(height: imageHeight)
+                        .clipped()
                         .cornerRadius(cornerRadius)
                 }
                 
