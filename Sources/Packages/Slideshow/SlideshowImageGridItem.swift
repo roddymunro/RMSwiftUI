@@ -20,12 +20,13 @@ struct SlideshowImageGridItem: View {
 //        ZStack {
             if index < images.count, let image = images[index] {
                 if index < maximumImagesToShow ?? Int.max {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: imageHeight)
-                        .clipped()
-                        .cornerRadius(cornerRadius)
+                    GeometryReader { geo in
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: geo.size.width, height: imageHeight)
+                            .cornerRadius(cornerRadius)
+                    }
                 }
                 
 //                if let maximumImagesToShow = maximumImagesToShow, images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
