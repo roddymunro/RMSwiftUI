@@ -40,12 +40,28 @@ public struct SlideshowImageGridView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: imageSize.width), spacing: 16)], alignment: .leading, spacing: 8) {
                 ForEach(images.indices, id: \.self) { index in
-                    Button(action: {
-                        withAnimation(.easeInOut) {
-                            openImage(at: index)
+                    ZStack(alignment: .topTrailing) {
+                        Button(action: {
+                            withAnimation(.easeInOut) {
+                                openImage(at: index)
+                            }
+                        }) {
+                            SlideshowImageGridItem(images: $images, index: index, imageHeight: imageSize.height, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius)
                         }
-                    }) {
-                        SlideshowImageGridItem(images: $images, index: index, imageHeight: imageSize.height, maximumImagesToShow: maximumImagesToShow, cornerRadius: cornerRadius, onDeleteButtonTapped: onDeleteButtonTapped)
+                        
+                        if let maximumImagesToShow = maximumImagesToShow, images.count > maximumImagesToShow && index == maximumImagesToShow - 1 {
+                            // show no button
+                        } else if let onDeleteButtonTapped = onDeleteButtonTapped {
+                            Button(action: { onDeleteButtonTapped(index) }) {
+                                Image(systemName: "trash")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(8)
+                                    .background(Color.black)
+                                    .clipShape(Circle())
+                            }
+                            .padding(6)
+                        }
                     }
                 }
                 if let onAddButtonTapped = onAddButtonTapped {

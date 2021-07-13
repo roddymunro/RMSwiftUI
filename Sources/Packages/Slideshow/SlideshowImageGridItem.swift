@@ -15,7 +15,6 @@ struct SlideshowImageGridItem: View {
     let imageHeight: CGFloat
     let maximumImagesToShow: Int?
     let cornerRadius: CGFloat
-    let onDeleteButtonTapped: ((Int) -> ())?
     
     var body: some View {
         ZStack {
@@ -36,22 +35,6 @@ struct SlideshowImageGridItem: View {
                         .font(.title)
                         .fontWeight(.heavy)
                         .foregroundColor(.white)
-                } else if let onDeleteButtonTapped = onDeleteButtonTapped {
-                    HStack {
-                        Spacer()
-                        VStack {
-                            Button(action: { onDeleteButtonTapped(index) }) {
-                                Image(systemName: "trash")
-                                    .font(.system(size: 16, weight: .bold))
-                                    .foregroundColor(.white)
-                                    .padding(8)
-                                    .background(Color.black)
-                                    .clipShape(Circle())
-                            }
-                            .padding(6)
-                            Spacer()
-                        }
-                    }
                 }
             } else {
                 RoundedRectangle(cornerRadius: cornerRadius)
