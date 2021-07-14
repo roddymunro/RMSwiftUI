@@ -13,6 +13,15 @@ struct SlideshowView: View {
     @Binding var selectedImageIndex: Int?
     @Binding var slideshowOpened: Bool
     
+    init(images: Binding<[UIImage?]>, selectedImageIndex: Binding<Int?>, slideshowOpened: Binding<Bool>) {
+        self._images = images
+        self._selectedImageIndex = selectedImageIndex
+        self._slideshowOpened = slideshowOpened
+        
+        UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(.accentColor)
+        UIPageControl.appearance().pageIndicatorTintColor = UIColor.lightGray
+    }
+    
     var body: some View {
         ZStack {
             Color.background.ignoresSafeArea()
