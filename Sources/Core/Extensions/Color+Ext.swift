@@ -1,6 +1,6 @@
 //
 //  Color+Ext.swift
-//  Plate-It
+//  RMSwiftUI
 //
 //  Created by Roddy Munro on 03/02/2021.
 //
