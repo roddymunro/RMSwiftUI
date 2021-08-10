@@ -9,8 +9,9 @@ public struct CardView<Content>: View where Content: View {
     private var backgroundColor: Color
     private var content: () -> Content
     private var needsPadding: Bool
+    private var fitToContent: Bool
     
-    public init(backgroundColor: Color?=nil, needsPadding: Bool=true, content: @escaping () -> Content) {
+    public init(backgroundColor: Color?=nil, needsPadding: Bool=true, fitToContent: Bool=false, content: @escaping () -> Content) {
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
         } else {
@@ -22,6 +23,7 @@ public struct CardView<Content>: View where Content: View {
         }
         
         self.needsPadding = needsPadding
+        self.fitToContent = fitToContent
         self.content = content
     }
 
@@ -33,7 +35,9 @@ public struct CardView<Content>: View where Content: View {
             } else {
                 content()
             }
-            Spacer(minLength: 0)
+            if !fitToContent {
+                Spacer(minLength: 0)
+            }
         }
         .cornerRadius(16)
         .background(backgroundColor)
