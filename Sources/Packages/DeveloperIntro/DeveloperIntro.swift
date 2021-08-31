@@ -53,7 +53,7 @@ extension DeveloperIntro {
         public let title: String
         public let systemImage: String
         
-        init(action: @escaping ()->(), title: String, systemImage: String) {
+        public init(action: @escaping ()->(), title: String, systemImage: String) {
             self.action = action
             self.title = title
             self.systemImage = systemImage
