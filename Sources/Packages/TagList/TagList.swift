@@ -43,12 +43,12 @@ public struct TagList: View {
                     content(geo: geometry)
                 }
             } else {
-                embedInScrollView
+                content(geo: geometry)
             }
         }
     }
     
-    private var content(geo: GeometryProxy) -> some View {
+    private func content(geo: GeometryProxy) -> some View {
         VStack(alignment: .leading) {
             ForEach(rowCounts(geo).indices, id: \.self) { rowIndex in
                 HStack {
