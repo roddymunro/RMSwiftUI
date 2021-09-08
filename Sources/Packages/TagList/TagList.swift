@@ -9,12 +9,14 @@ public struct TagList: View {
 
     @Binding var allTags: Set<String>
     @Binding var selectedTags: Set<String>
+    private let embedInScrollView: Bool
 
     private var orderedTags: [String] { allTags.sorted() }
     
-    public init(allTags: Binding<Set<String>>, selectedTags: Binding<Set<String>>) {
+    public init(allTags: Binding<Set<String>>, selectedTags: Binding<Set<String>>, embedInScrollView: Bool=true) {
         self._allTags = allTags
         self._selectedTags = selectedTags
+        self.embedInScrollView = embedInScrollView
     }
 
     private func rowCounts(_ geometry: GeometryProxy) -> [Int] {
@@ -36,19 +38,27 @@ public struct TagList: View {
 
     public var body: some View {
         GeometryReader { geometry in
-            ScrollView {
-                VStack(alignment: .leading) {
-                    ForEach(rowCounts(geometry).indices, id: \.self) { rowIndex in
-                        HStack {
-                            ForEach(0 ..< rowCounts(geometry)[rowIndex], id: \.self) { itemIndex in
-                                TagButton(title: tag(rowCounts: rowCounts(geometry), rowIndex: rowIndex, itemIndex: itemIndex), selectedTags: $selectedTags)
-                            }
-                            Spacer()
-                        }.padding(.vertical, 4)
+            if embedInScrollView {
+                ScrollView {
+                    content(geo: geometry)
+                }
+            } else {
+                embedInScrollView
+            }
+        }
+    }
+    
+    private var content(geo: GeometryProxy) -> some View {
+        VStack(alignment: .leading) {
+            ForEach(rowCounts(geo).indices, id: \.self) { rowIndex in
+                HStack {
+                    ForEach(0 ..< rowCounts(geo)[rowIndex], id: \.self) { itemIndex in
+                        TagButton(title: tag(rowCounts: rowCounts(geo), rowIndex: rowIndex, itemIndex: itemIndex), selectedTags: $selectedTags)
                     }
                     Spacer()
-                }
+                }.padding(.vertical, 4)
             }
+            Spacer()
         }
     }
 }
