@@ -7,17 +7,19 @@
 import SwiftUI
 import RMSwiftUICore
 
+
 public struct SlideshowImageGridView: View {
     
     @Binding private var images: [UIImage?]
     @State private var selectedImageIndex: Int?
     @State private var slideshowOpened: Bool = false
+    @State private var imageSourcePresented: Bool = false
     
     private let imageHeight: CGFloat
     private let imagesPerRow: Int
     private let maximumImagesToShow: Int?
     private let cornerRadius: CGFloat
-    private let onAddButtonTapped: (() -> ())?
+    private let didSelectImageSource: ((UIImagePickerController.SourceType)->())?
     private let onDeleteButtonTapped: ((Int) -> ())?
     
     public init(
@@ -26,7 +28,7 @@ public struct SlideshowImageGridView: View {
         imagesPerRow: Int,
         maximumImagesToShow: Int?=nil,
         cornerRadius: CGFloat = 12,
-        onAddButtonTapped: (() -> ())?=nil,
+        didSelectImageSource: ((UIImagePickerController.SourceType) -> ())?=nil,
         onDeleteButtonTapped: ((Int) -> ())?=nil
     ) {
         self._images = images
@@ -34,7 +36,7 @@ public struct SlideshowImageGridView: View {
         self.imagesPerRow = imagesPerRow
         self.maximumImagesToShow = maximumImagesToShow
         self.cornerRadius = cornerRadius
-        self.onAddButtonTapped = onAddButtonTapped
+        self.didSelectImageSource = didSelectImageSource
         self.onDeleteButtonTapped = onDeleteButtonTapped
         UIScrollView.appearance().bounces = false
     }
@@ -69,9 +71,14 @@ public struct SlideshowImageGridView: View {
                         }
                     }
                 }
-                if let onAddButtonTapped = onAddButtonTapped {
-                    Button(action: onAddButtonTapped) {
+                if let didSelectImageSource = didSelectImageSource {
+                    Button(action: { imageSourcePresented = true }) {
                         addButtonLabel
+                    }
+                    .confirmationDialog("Image Source", isPresented: $imageSourcePresented, titleVisibility: .visible) {
+                        Button("Camera", action: { didSelectImageSource(.camera) })
+                        Button("Photo Library", action: { didSelectImageSource(.photoLibrary) })
+                        Button("Cancel", role: .cancel, action: { imageSourcePresented = false })
                     }
                 }
             }
